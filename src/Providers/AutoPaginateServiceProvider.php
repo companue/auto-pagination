@@ -13,10 +13,10 @@ class AutoPaginateServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Publish config if needed in future
-        // $this->publishes([
-        //     __DIR__.'/../../config/auto-paginate.php' => config_path('auto-paginate.php'),
-        // ], 'auto-paginate-config');
+        // Publish AutoPaginatedController
+        $this->publishes([
+            __DIR__ . '/../Controllers/AutoPaginatedController.php' => app_path('Http/Controllers/API/AutoPaginatedController.php'),
+        ], 'auto-paginate-controller');
     }
 
     /**
@@ -26,9 +26,6 @@ class AutoPaginateServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Merge config if needed
-        // $this->mergeConfigFrom(
-        //     __DIR__.'/../../config/auto-paginate.php', 'auto-paginate'
-        // );
+        // Nothing to register
     }
 }

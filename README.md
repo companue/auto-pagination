@@ -25,6 +25,48 @@ composer require companue/auto-paginate
 
 The package will automatically register its service provider.
 
+### Publish AutoPaginatedController (Recommended)
+
+Publish the AutoPaginatedController to your project:
+
+```bash
+php artisan vendor:publish --tag=auto-paginate-controller
+```
+
+This creates `app/Http/Controllers/API/AutoPaginatedController.php` with pagination methods built-in.
+
+Then update your API controllers to extend it:
+
+```php
+use App\Http\Controllers\API\AutoPaginatedController;
+
+class YourController extends AutoPaginatedController
+{
+    public function index(Request $request)
+    {
+        $query = YourModel::query();
+        return response()->json(
+            $this->indexResponse($query, YourResource::class, $request)
+        );
+    }
+}
+```
+
+### Alternative: Use Trait Directly
+
+If you prefer not to use AutoPaginatedController, add the trait to your controllers:
+
+```php
+use Companue\AutoPaginate\Traits\PaginatesQueries;
+
+class YourController extends Controller
+{
+    use PaginatesQueries;
+    
+    // Same usage as above
+}
+```
+
 ## Usage
 
 ### Basic Usage
