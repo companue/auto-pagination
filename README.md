@@ -25,12 +25,32 @@ composer require companue/auto-paginate
 
 The package will automatically register its service provider.
 
-### Publish AutoPaginatedController (Recommended)
+### Quick Installation
+
+Run the installation command for an interactive setup:
+
+```bash
+php artisan auto-paginate:install
+```
+
+This will guide you through two installation options:
+1. **Publish AutoPaginatedController** (Recommended) - Extend your controllers from it
+2. **Update base Controller.php** - Inject trait directly into the base controller
+
+### Manual Installation Options
+
+#### Option 1: Publish AutoPaginatedController (Recommended)
 
 Publish the AutoPaginatedController to your project:
 
 ```bash
 php artisan vendor:publish --tag=auto-paginate-controller
+```
+
+Or use the command with the default option:
+
+```bash
+php artisan auto-paginate:install
 ```
 
 This creates `app/Http/Controllers/API/AutoPaginatedController.php` with pagination methods built-in.
@@ -64,6 +84,69 @@ class YourController extends Controller
     use PaginatesQueries;
     
     // Same usage as above
+}
+```
+
+#### Option 2: Update Base Controller (Direct Injection)
+
+Inject the trait directly into your base `Controller.php`:
+
+```bash
+php artisan auto-paginate:install --base-controller
+```
+
+This will:
+- Create a backup of your `Controller.php` at `app/Http/Controllers/Controller.php.backup`
+- Add `use Companue\AutoPaginate\Traits\PaginatesQueries;` import statement
+- Add `PaginatesQueries` to your existing trait list in the Controller class
+
+**Before:**
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+
+class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+}
+```
+
+**After:**
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Companue\AutoPaginate\Traits\PaginatesQueries;
+
+class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, PaginatesQueries;
+}
+```
+
+After installation, all your controllers will have pagination methods without extending anything:
+
+```php
+class YourController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = YourModel::query();
+        return response()->json(
+            $this->indexResponse($query, YourResource::class, $request)
+        );
+    }
 }
 ```
 

@@ -2,6 +2,7 @@
 
 namespace Companue\AutoPaginate\Providers;
 
+use Companue\AutoPaginate\Console\Commands\InstallAutoPaginationCommand;
 use Illuminate\Support\ServiceProvider;
 
 class AutoPaginateServiceProvider extends ServiceProvider
@@ -17,6 +18,13 @@ class AutoPaginateServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../Controllers/AutoPaginatedController.php' => app_path('Http/Controllers/API/AutoPaginatedController.php'),
         ], 'auto-paginate-controller');
+
+        // Register commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallAutoPaginationCommand::class,
+            ]);
+        }
     }
 
     /**
