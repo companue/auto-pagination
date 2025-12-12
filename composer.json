@@ -1,0 +1,43 @@
+{
+    "name": "companue/auto-paginate",
+    "description": "Laravel package for automatic API pagination with infinite scroll support. Provides reusable traits and helpers for consistent paginated responses across all API endpoints.",
+    "keywords": ["laravel", "pagination", "api", "infinite-scroll", "companue", "auto-pagination"],
+    "homepage": "https://github.com/companue/auto-paginate",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mimalefdal",
+            "email": "mimalefdal@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/database": "^10.0|^11.0|^12.0",
+        "illuminate/pagination": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Companue\\AutoPaginate\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Companue\\AutoPaginate\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Companue\\AutoPaginate\\Providers\\AutoPaginateServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
