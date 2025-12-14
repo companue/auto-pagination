@@ -85,13 +85,8 @@ trait PaginatesQueries
             return false;
         }
         
-        // Check if page parameter is present (indicates pagination request)
-        if ($request->has('page')) {
-            return true;
-        }
-        
-        // Default behavior: paginate if per_page is specified or by default
-        return $request->has('per_page') || true;
+        // Only paginate if page or per_page parameters are present
+        return $request->has('page') || $request->has('per_page');
     }
     
     /**
